@@ -1,0 +1,30 @@
+---
+name: build_linux
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  main:
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}-${{ matrix.arch }} artefacts
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            arch: x64
+          - os: ubuntu-24.04-arm
+            arch: arm64
+    steps:
+      - run: |
+          getconf PAGESIZE | tee "${{ matrix.arch }}-pagesize.txt"
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            *-pagesize.txt
+
