@@ -23,7 +23,7 @@ jobs:
     steps:
       - run: |
           uname -a | tee -a "${{ matrix.arch }}-stats.txt"
-          echo "Page size: "$(getconf PAGESIZE)"" | tee -a "${{ matrix.arch }}-stats.txt"
+          echo "Page size: $(getconf PAGESIZE)" | tee -a "${{ matrix.arch }}-stats.txt"
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
