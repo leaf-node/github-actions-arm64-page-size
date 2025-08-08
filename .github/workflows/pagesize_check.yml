@@ -22,10 +22,11 @@ jobs:
             arch: arm64
     steps:
       - run: |
-          getconf PAGESIZE | tee "${{ matrix.arch }}-pagesize.txt"
+          uname -a | tee -a "${{ matrix.arch }}-stats.txt"
+          echo "Page size: "$(getconf PAGESIZE)"" | tee -a "${{ matrix.arch }}-stats.txt"
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            *-pagesize.txt
+            *-stats.txt
 
